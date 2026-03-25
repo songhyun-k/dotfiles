@@ -1,6 +1,6 @@
 # dotfiles
 
-tmux, nvim (LazyVim), Claude Code statusline (ccstatusline), Karabiner 설정을 GNU Stow로 관리.
+tmux, nvim (LazyVim), Claude Code statusline (ccstatusline), Hammerspoon 설정을 GNU Stow로 관리.
 
 ## 의존성
 
@@ -19,7 +19,7 @@ tmux, nvim (LazyVim), Claude Code statusline (ccstatusline), Karabiner 설정을
 
 | 도구 | 용도 | 설치 |
 |------|------|------|
-| Karabiner-Elements | Ctrl+b IME 전환 | `brew install --cask karabiner-elements` |
+| Hammerspoon | Ctrl+b IME 전환 | `brew install --cask hammerspoon` |
 | im-select | tmux 상태바 IME 표시 | `brew install im-select` |
 
 ## 설치
@@ -32,7 +32,7 @@ cd ~/dotfiles
 
 ## 설치 후 수동 작업
 
-1. **Karabiner (macOS)**: Karabiner-Elements 설치 → 한번 실행 (karabiner.json 생성) → 설정 UI → Complex Modifications → Add rule → "Tmux prefix IME switch" 활성화
+1. **Hammerspoon (macOS)**: Hammerspoon 실행 → 접근성(Accessibility) 권한 허용
 2. **tmux 플러그인**: tmux 실행 후 `prefix + I`로 TPM 플러그인 설치
 
 ## 참고

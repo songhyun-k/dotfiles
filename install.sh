@@ -15,16 +15,12 @@ OS="$(uname)"
 # Stow packages (restow로 idempotent 동작)
 PACKAGES="tmux nvim ccstatusline"
 if [ "$OS" = "Darwin" ]; then
-  PACKAGES="$PACKAGES karabiner"
+  PACKAGES="$PACKAGES hammerspoon"
 fi
 
 for pkg in $PACKAGES; do
   echo "Stowing $pkg..."
-  if [ "$pkg" = "karabiner" ]; then
-    stow -R -v --no-folding --target="$HOME" "$pkg"
-  else
-    stow -R -v --target="$HOME" "$pkg"
-  fi
+  stow -R -v --target="$HOME" "$pkg"
 done
 
 # Claude Code settings.json merge
