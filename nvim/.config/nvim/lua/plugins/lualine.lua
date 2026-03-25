@@ -3,6 +3,7 @@ return {
   opts = function(_, opts)
   local auto = require("lualine.themes.auto")
 
+  -- Catppuccin Frappe palette (MIT License, https://github.com/catppuccin/catppuccin)
   local colors = {
     rosewater = "#f2d5cf",
     flamingo = "#eebebe",
