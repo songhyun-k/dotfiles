@@ -8,7 +8,7 @@
           "type": "basic",
           "from": { "key_code": "b", "modifiers": { "mandatory": ["control"] } },
           "to": [
-            { "select_input_source": { "language": "en" } },
+            { "select_input_source": { "input_source_id": "^com\\.apple\\.keylayout\\.ABC$" } },
             { "key_code": "b", "modifiers": ["control"] }
           ],
           "conditions": [
