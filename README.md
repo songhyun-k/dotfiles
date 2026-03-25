@@ -12,8 +12,8 @@
 <p align="center">
   <img src="https://img.shields.io/badge/macOS-000?logo=apple&logoColor=white" alt="macOS">
   <img src="https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black" alt="Linux">
-  <img src="https://img.shields.io/badge/Catppuccin_Frappe-ef9f76?logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48L3N2Zz4=" alt="Catppuccin Frappe">
-  <img src="https://img.shields.io/github/license/songhyun-k/dotfiles" alt="License">
+  <img src="https://img.shields.io/badge/theme-Catppuccin_Frappe-ef9f76?style=flat&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDY0IDY0Ij48Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMCIgZmlsbD0iI2VmOWY3NiIvPjwvc3ZnPg==" alt="Catppuccin Frappe">
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License">
 </p>
 
 ---
