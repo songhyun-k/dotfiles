@@ -1,8 +1,33 @@
-# dotfiles
+<h1 align="center">dotfiles</h1>
 
-tmux, Neovim (LazyVim), Claude Code statusline, Hammerspoon 설정을 [GNU Stow](https://www.gnu.org/software/stow/)로 관리.
+<p align="center">
+  <b>tmux</b> + <b>Neovim</b> (LazyVim) + <b>Claude Code</b> statusline + <b>Hammerspoon</b><br>
+  managed with <a href="https://www.gnu.org/software/stow/">GNU Stow</a>
+</p>
 
-## 설치
+<p align="center">
+  <img src="preview.png" alt="preview" width="800">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/macOS-000?logo=apple&logoColor=white" alt="macOS">
+  <img src="https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black" alt="Linux">
+  <img src="https://img.shields.io/badge/Catppuccin_Frappe-ef9f76?logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48L3N2Zz4=" alt="Catppuccin Frappe">
+  <img src="https://img.shields.io/github/license/songhyun-k/dotfiles" alt="License">
+</p>
+
+---
+
+## What's Included
+
+| Package | Description |
+|---------|-------------|
+| **tmux** | Catppuccin Frappe theme, Nerd Font icons, OSC52 clipboard (SSH 지원), TPM plugins |
+| **nvim** | LazyVim with catppuccin, custom lualine, 26 extras (TS, Python, Ruby, Docker, etc.) |
+| **ccstatusline** | Claude Code statusline (powerline theme, usage/token widgets) |
+| **hammerspoon** | Ctrl+b 입력 시 IME → ABC 자동 전환 (macOS, 터미널 앱 한정) |
+
+## Quick Start
 
 ```bash
 git clone git@github.com:songhyun-k/dotfiles.git ~/dotfiles
@@ -10,69 +35,89 @@ cd ~/dotfiles
 ./install.sh
 ```
 
-### 설치 후
+### Post-install
 
-- **tmux**: 실행 후 `prefix + I`로 TPM 플러그인 설치
-- **nvim**: 첫 실행 시 플러그인 자동 설치 (lazy.nvim + Mason)
-- **Hammerspoon** (macOS): 실행 후 접근성(Accessibility) 권한 허용
+| Step | Command |
+|------|---------|
+| tmux plugins | tmux 실행 → `prefix + I` |
+| nvim plugins | `nvim` 첫 실행 시 자동 설치 |
+| Hammerspoon (macOS) | 앱 실행 → 접근성 권한 허용 |
 
-## 의존성
+## Structure
 
-### 필수
+```
+dotfiles/
+├── tmux/.config/tmux/        # tmux.conf, colors, ime-status
+├── nvim/.config/nvim/        # LazyVim config
+├── ccstatusline/             # ccstatusline settings + Claude Code merge overlay
+├── hammerspoon/.hammerspoon/ # IME auto-switch on Ctrl+b
+├── install.sh                # stow + Claude Code settings merge
+└── README.md
+```
 
-| 도구 | 용도 | macOS | Linux |
-|------|------|-------|-------|
+`install.sh`는 OS를 감지하여 macOS에서만 Hammerspoon 패키지를 포함합니다. Claude Code의 `settings.json`에는 ccstatusline 설정을 `jq`로 idempotent merge합니다.
+
+## Dependencies
+
+### Required
+
+| Tool | Purpose | macOS | Linux |
+|------|---------|-------|-------|
 | git ≥ 2.19 | TPM/lazy.nvim bootstrap | `brew install git` | `apt install git` |
-| tmux ≥ 3.2 | 터미널 멀티플렉서 (OSC52) | `brew install tmux` | `apt install tmux` |
-| Neovim ≥ 0.11.2 | 에디터 (LazyVim) | `brew install neovim` | 공식 릴리즈 |
-| GNU Stow | 심볼릭 링크 관리 | `brew install stow` | `apt install stow` |
-| jq | install.sh JSON merge | `brew install jq` | `apt install jq` |
-| Node.js | LSP, 포매터, 린터 | `brew install node` | `apt install nodejs` |
-| Bun | ccstatusline | `brew install oven-sh/bun/bun` | `curl -fsSL https://bun.sh/install \| bash` |
-| ripgrep | 검색 (fzf, snacks_picker) | `brew install ripgrep` | `apt install ripgrep` |
-| fd | 파일 탐색 (fzf, snacks_picker) | `brew install fd` | `apt install fd-find` |
-| fzf | fuzzy finder | `brew install fzf` | `apt install fzf` |
-| curl | blink.cmp 자동완성 | 기본 설치 | `apt install curl` |
-| C compiler | treesitter 파서 컴파일 | `xcode-select --install` | `apt install build-essential` |
-| [Nerd Font](https://www.nerdfonts.com/) v3+ | tmux/nvim 아이콘 | `brew install --cask font-hack-nerd-font` | 공식 릴리즈 |
+| tmux ≥ 3.2 | Terminal multiplexer (OSC52) | `brew install tmux` | `apt install tmux` |
+| Neovim ≥ 0.11.2 | Editor (LazyVim) | `brew install neovim` | official release |
+| GNU Stow | Symlink manager | `brew install stow` | `apt install stow` |
+| jq | JSON merge in install.sh | `brew install jq` | `apt install jq` |
+| Node.js | LSPs, formatters, linters | `brew install node` | `apt install nodejs` |
+| Bun | ccstatusline runtime | `brew install oven-sh/bun/bun` | `curl -fsSL https://bun.sh/install \| bash` |
+| ripgrep | Search (fzf, snacks_picker) | `brew install ripgrep` | `apt install ripgrep` |
+| fd | File finder (fzf, snacks_picker) | `brew install fd` | `apt install fd-find` |
+| fzf | Fuzzy finder | `brew install fzf` | `apt install fzf` |
+| curl | blink.cmp completions | pre-installed | `apt install curl` |
+| C compiler | Treesitter parsers | `xcode-select --install` | `apt install build-essential` |
+| [Nerd Font](https://www.nerdfonts.com/) v3+ | Icons (tmux/nvim) | `brew install --cask font-hack-nerd-font` | official release |
 
-### 권장
+### Recommended
 
-| 도구 | 용도 | 설치 |
-|------|------|------|
+| Tool | Purpose | Install |
+|------|---------|---------|
 | lazygit | Git TUI (`<leader>gg`) | `brew install lazygit` |
-| bat | fzf 프리뷰 하이라이팅 | `brew install bat` |
-| yazi | 파일 탐색기 (`prefix + Tab`) | `brew install yazi` |
+| bat | fzf preview highlighting | `brew install bat` |
+| yazi | File manager (`prefix + Tab`) | `brew install yazi` |
 
-### 언어 런타임
+### Language Runtimes
 
-LazyVim extras에 따라 필요. LSP/린터는 Mason이 설치하지만 런타임은 직접 설치.
+LSPs and linters are auto-installed by Mason. Runtimes must be installed manually.
 
-| 도구 | extras | 설치 |
-|------|--------|------|
+| Tool | LazyVim Extras | Install |
+|------|----------------|---------|
 | python3 | lang.python | `brew install python` / `apt install python3` |
 | ruby | lang.ruby | `brew install ruby` / `apt install ruby` |
 | typescript | lang.typescript, angular, svelte | `npm install -g typescript` |
 | prettier | formatting.prettier | `npm install -g prettier` |
 
-### macOS 전용
+### macOS Only
 
-| 도구 | 용도 | 설치 |
-|------|------|------|
-| Hammerspoon | Ctrl+b 입력 시 IME → ABC 전환 | `brew install --cask hammerspoon` |
-| im-select | tmux 상태바 IME 표시 | `brew install im-select` |
+| Tool | Purpose | Install |
+|------|---------|---------|
+| Hammerspoon | Switch IME to ABC on Ctrl+b | `brew install --cask hammerspoon` |
+| im-select | IME indicator in tmux status bar | `brew install im-select` |
 
-## 참고
+## Notes
 
-### 첫 마이그레이션
+### First-time Migration
 
-기존 설정 파일이 심볼릭 링크가 아닌 실제 파일로 존재하면 `stow`가 충돌한다. 기존 파일을 삭제 후 `install.sh`를 실행하거나, `stow --adopt`로 기존 파일을 패키지에 흡수할 수 있다.
+If real config files (not symlinks) already exist, `stow` will conflict. Either delete them first, or use `stow --adopt` to absorb existing files into the package.
 
-### Linux 서버 terminfo
+### Linux Server terminfo
 
-리모트 서버에 `xterm-ghostty` terminfo가 없을 수 있다. tmux.conf에 fallback(`xterm-256color:clipboard`)이 포함되어 있다.
+Remote servers may lack `xterm-ghostty` terminfo. A fallback (`xterm-256color:clipboard`) is included in tmux.conf.
 
 ## Acknowledgments
 
-- Neovim config structure based on [LazyVim starter](https://github.com/LazyVim/starter) (Apache 2.0)
+- Neovim config based on [LazyVim starter](https://github.com/LazyVim/starter) (Apache 2.0)
 - Color palette: [Catppuccin Frappe](https://github.com/catppuccin/catppuccin) (MIT)
+
+## License
+
+[MIT](LICENSE)
