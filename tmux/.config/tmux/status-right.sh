@@ -5,17 +5,11 @@
 SEP="│"
 segments=()
 
-# --- Online status ---
-check_online() {
-  if ping -c 1 -W 1 1.1.1.1 >/dev/null 2>&1; then
-    return 0
-  elif curl -s --max-time 3 -o /dev/null https://www.google.com 2>/dev/null; then
-    return 0
-  fi
-  return 1
-}
+# --- Online status (via tmux-online-status plugin) ---
+ONLINE_SCRIPT="$HOME/.config/tmux/plugins/tmux-online-status/scripts/online_status_icon.sh"
+online=$( [ -x "$ONLINE_SCRIPT" ] && "$ONLINE_SCRIPT" 2>/dev/null || echo "nok" )
 
-if check_online; then
+if [ "$online" = "ok" ]; then
   segments+=("#[fg=#{@thm_mauve}] 󰖩 on ")
 else
   segments+=("#[fg=#{@thm_red},bold,reverse] 󰖪 off #[none]")
