@@ -1,0 +1,24 @@
+"$schema" = "https://yazi-rs.github.io/schemas/theme.json"
+
+[flavor]
+dark = "catppuccin-frappe"
+
+# Square-edged indicator with subtle background
+[indicator]
+current = { bg = "#414559" }
+preview = { bg = "#303446" }
+padding = { open = "▐", close = "▌" }
+
+# Status bar: no background, no rounded separators
+[status]
+sep_left  = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+# Mode labels: no background, bold text
+[mode]
+normal_main = { fg = "#8caaee", bold = true }
+normal_alt  = { fg = "#8caaee", bold = true }
+select_main = { fg = "#81c8be", bold = true }
+select_alt  = { fg = "#81c8be", bold = true }
+unset_main  = { fg = "#eebebe", bold = true }
+unset_alt   = { fg = "#eebebe", bold = true }

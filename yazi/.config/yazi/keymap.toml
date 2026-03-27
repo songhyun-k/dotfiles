@@ -1,0 +1,6 @@
+"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
+
+[mgr]
+prepend_keymap = [
+  { on = [ "g", "l" ], run = "shell --orphan -- ~/.local/bin/yazi-quicklook %h", desc = "Quick Look hovered file" },
+]
