@@ -26,7 +26,7 @@ if [ ! -d "$P10K_DIR" ]; then
 fi
 
 # Stow packages (restow로 idempotent 동작)
-PACKAGES="tmux nvim ccstatusline zsh"
+PACKAGES="tmux nvim ccstatusline zsh yazi"
 if [ "$OS" = "Darwin" ]; then
   PACKAGES="$PACKAGES hammerspoon"
 fi
