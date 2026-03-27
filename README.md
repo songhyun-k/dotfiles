@@ -25,6 +25,8 @@
 | **tmux** | Catppuccin Frappe theme, Nerd Font icons, OSC52 clipboard (SSH 지원), TPM plugins |
 | **nvim** | LazyVim with catppuccin, custom lualine, 26 extras (TS, Python, Ruby, Docker, etc.) |
 | **ccstatusline** | Claude Code statusline (powerline theme, usage/token widgets) |
+| **zsh** | Powerlevel10k 설정 (catppuccin frappe 색상, rainbow 스타일) |
+| **yazi** | Catppuccin Frappe theme, flat status bar, custom keybindings |
 | **hammerspoon** | Ctrl+b 입력 시 IME → ABC 자동 전환 (macOS, 터미널 앱 한정) |
 
 ## Quick Start
@@ -39,6 +41,7 @@ cd ~/dotfiles
 
 | Step | Command |
 |------|---------|
+| zsh 테마 적용 | `~/.zshrc`에서 `ZSH_THEME="powerlevel10k/powerlevel10k"` 설정, `[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh` 추가 후 `exec zsh` |
 | tmux plugins | tmux 실행 → `prefix + I` |
 | nvim plugins | `nvim` 첫 실행 시 자동 설치 |
 | Hammerspoon (macOS) | 앱 실행 → 접근성 권한 허용 |
@@ -47,7 +50,9 @@ cd ~/dotfiles
 
 ```
 dotfiles/
-├── tmux/.config/tmux/        # tmux.conf, colors, ime-status
+├── zsh/                         # .p10k.zsh (Powerlevel10k config)
+├── yazi/.config/yazi/           # yazi theme, init.lua, keybindings
+├── tmux/.config/tmux/           # tmux.conf, colors, ime-status
 ├── nvim/.config/nvim/        # LazyVim config
 ├── ccstatusline/             # ccstatusline settings + Claude Code merge overlay
 ├── hammerspoon/.hammerspoon/ # IME auto-switch on Ctrl+b
