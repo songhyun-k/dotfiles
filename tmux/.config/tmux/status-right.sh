@@ -7,11 +7,12 @@ segments=()
 
 # --- Online status ---
 check_online() {
-  if command -v ping >/dev/null 2>&1; then
-    ping -c 1 -w 3 www.google.com >/dev/null 2>&1
-  else
-    curl -s --max-time 3 -o /dev/null https://www.google.com 2>/dev/null
+  if ping -c 1 -W 1 1.1.1.1 >/dev/null 2>&1; then
+    return 0
+  elif curl -s --max-time 3 -o /dev/null https://www.google.com 2>/dev/null; then
+    return 0
   fi
+  return 1
 }
 
 if check_online; then
@@ -34,17 +35,18 @@ CPU_SCRIPT="$HOME/.config/tmux/plugins/tmux-cpu/scripts/cpu_percentage.sh"
 if [ -x "$CPU_SCRIPT" ]; then
   cpu=$("$CPU_SCRIPT" 2>/dev/null)
   if [ -n "$cpu" ]; then
-  segments+=("#[fg=#{@thm_green},bold] 󰍛 ${cpu} ")
+    segments+=("#[fg=#{@thm_green},bold] 󰍛 ${cpu} ")
   fi
 fi
 
 # --- Battery (only if hardware present) ---
-if [ -d /sys/class/power_supply/BAT0 ] || [ -d /sys/class/power_supply/BAT1 ]; then
+if [ -d /sys/class/power_supply/BAT0 ] || [ -d /sys/class/power_supply/BAT1 ] || \
+   { [ "$(uname)" = "Darwin" ] && pmset -g batt 2>/dev/null | grep -q "InternalBattery"; }; then
   BATT_SCRIPT="$HOME/.config/tmux/plugins/tmux-battery/scripts/battery_percentage.sh"
   if [ -x "$BATT_SCRIPT" ]; then
     batt=$("$BATT_SCRIPT" 2>/dev/null)
   fi
-  if [ -n "$batt" ] && [ "$batt" != "" ]; then
+  if [ -n "$batt" ]; then
     batt_num=${batt%%%}
     if [ "${batt_num:-100}" -le 20 ] 2>/dev/null; then
       segments+=("#[bg=#{@thm_red},fg=default,bold] 󱐋 ${batt} #[none]")
