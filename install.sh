@@ -12,8 +12,21 @@ command -v bun >/dev/null 2>&1 || echo "Warning: bun is not installed. ccstatusl
 
 OS="$(uname)"
 
+# Oh My Zsh 설치
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  echo "Installing Oh My Zsh..."
+  RUNZSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+# Powerlevel10k 테마 설치
+P10K_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+if [ ! -d "$P10K_DIR" ]; then
+  echo "Installing Powerlevel10k theme..."
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
+fi
+
 # Stow packages (restow로 idempotent 동작)
-PACKAGES="tmux nvim ccstatusline"
+PACKAGES="tmux nvim ccstatusline zsh"
 if [ "$OS" = "Darwin" ]; then
   PACKAGES="$PACKAGES hammerspoon"
 fi
