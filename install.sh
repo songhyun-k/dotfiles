@@ -45,15 +45,19 @@ mkdir -p "$HOME/.claude"
 cp "$CLAUDE_SETTINGS" "$CLAUDE_SETTINGS.bak"
 
 jq --slurpfile overlay "$OVERLAY" '
-  (.hooks // {}) |= with_entries(
-    .value |= map(select(._tag != "ccstatusline-managed"))
-  )
+  # Ensure .hooks is an object before processing
+  .hooks = (.hooks // {})
+  # Remove previously managed entries
+  | .hooks |= with_entries(
+      if (.value | type) == "array"
+      then .value |= map(select(._tag != "ccstatusline-managed"))
+      else .
+      end
+    )
   | .statusLine = $overlay[0].statusLine
-  | .hooks = (
-      (.hooks // {}) as $base |
-      ($overlay[0].hooks // {}) as $new |
-      ($base | keys + ($new | keys) | unique) as $all_keys |
-      reduce $all_keys[] as $k ({}; .[$k] = (($base[$k] // []) + ($new[$k] // [])))
+  | ($overlay[0].hooks // {}) as $new
+  | reduce ($new | keys[]) as $k (.;
+      .hooks[$k] = ((.hooks[$k] // []) + $new[$k])
     )
 ' "$CLAUDE_SETTINGS" > "$CLAUDE_SETTINGS.tmp"
 
