@@ -1,7 +1,7 @@
 <h1 align="center">dotfiles</h1>
 
 <p align="center">
-  <b>tmux</b> + <b>Neovim</b> (LazyVim) + <b>Claude Code</b> statusline + <b>Hammerspoon</b><br>
+  <b>tmux</b> + <b>Neovim</b> (LazyVim) + <b>Yazi</b> + <b>Zsh</b> (p10k) + <b>Claude Code</b> statusline + <b>Hammerspoon</b><br>
   managed with <a href="https://www.gnu.org/software/stow/">GNU Stow</a>
 </p>
 
@@ -22,12 +22,12 @@
 
 | Package | Description |
 |---------|-------------|
-| **tmux** | Catppuccin Frappe theme, Nerd Font icons, OSC52 clipboard (SSH 지원), TPM plugins |
+| **tmux** | Catppuccin Frappe theme, Nerd Font icons, OSC52 clipboard (SSH support), TPM plugins, dynamic status-right (conditional online/mem/cpu/battery/IME segments) |
 | **nvim** | LazyVim with catppuccin, custom lualine, 26 extras (TS, Python, Ruby, Docker, etc.) |
 | **ccstatusline** | Claude Code statusline (powerline theme, usage/token widgets) |
-| **zsh** | Powerlevel10k 설정 (catppuccin frappe 색상, rainbow 스타일) |
-| **yazi** | Catppuccin Frappe theme, flat status bar, custom keybindings |
-| **hammerspoon** | Ctrl+b 입력 시 IME → ABC 자동 전환 (macOS, 터미널 앱 한정) |
+| **zsh** | Powerlevel10k config (catppuccin frappe colors, rainbow style) |
+| **yazi** | Catppuccin Frappe theme, flat status bar, 10 plugins (git, full-border, toggle-pane, smart-filter, chmod, jump-to-char, relative-motions, bookmarks, lazygit, compress) |
+| **hammerspoon** | Auto-switch IME to ABC on Ctrl+b (macOS, terminal apps only) |
 
 ## Quick Start
 
@@ -41,26 +41,28 @@ cd ~/dotfiles
 
 | Step | Command |
 |------|---------|
-| zsh 테마 적용 | `~/.zshrc`에서 `ZSH_THEME="powerlevel10k/powerlevel10k"` 설정, `[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh` 추가 후 `exec zsh` |
-| tmux plugins | tmux 실행 → `prefix + I` |
-| nvim plugins | `nvim` 첫 실행 시 자동 설치 |
-| Hammerspoon (macOS) | 앱 실행 → 접근성 권한 허용 |
+| Apply zsh theme | Set `ZSH_THEME="powerlevel10k/powerlevel10k"` in `~/.zshrc`, add `[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh`, then `exec zsh` |
+| tmux plugins | Launch tmux, then `prefix + I` |
+| tmux-mem-cpu-load | `cd ~/.config/tmux/plugins/tmux-mem-cpu-load && cmake . && make` |
+| yazi plugins | Auto-installed by `install.sh` (`ya pkg install`). Manual: `ya pkg install` |
+| nvim plugins | Auto-installed on first `nvim` launch |
+| Hammerspoon (macOS) | Launch app, grant Accessibility permission |
 
 ## Structure
 
 ```
 dotfiles/
 ├── zsh/                         # .p10k.zsh (Powerlevel10k config)
-├── yazi/.config/yazi/           # yazi theme, init.lua, keybindings
-├── tmux/.config/tmux/           # tmux.conf, colors, ime-status
+├── yazi/.config/yazi/           # yazi theme, init.lua, keybindings, package.toml (plugins are restored via ya pkg install)
+├── tmux/.config/tmux/           # tmux.conf, colors, status-right.sh, ime-status
 ├── nvim/.config/nvim/        # LazyVim config
 ├── ccstatusline/             # ccstatusline settings + Claude Code merge overlay
 ├── hammerspoon/.hammerspoon/ # IME auto-switch on Ctrl+b
-├── install.sh                # stow + Claude Code settings merge
+├── install.sh                # stow + ya pkg install + Claude Code settings merge
 └── README.md
 ```
 
-`install.sh`는 OS를 감지하여 macOS에서만 Hammerspoon 패키지를 포함합니다. Claude Code의 `settings.json`에는 ccstatusline 설정을 `jq`로 idempotent merge합니다.
+`install.sh` detects the OS and includes the Hammerspoon package only on macOS. It merges ccstatusline settings into Claude Code's `settings.json` via `jq` (idempotent).
 
 ## Dependencies
 
@@ -79,7 +81,10 @@ dotfiles/
 | fd | File finder (fzf, snacks_picker) | `brew install fd` | `apt install fd-find` |
 | fzf | Fuzzy finder | `brew install fzf` | `apt install fzf` |
 | curl | blink.cmp completions | pre-installed | `apt install curl` |
-| C compiler | Treesitter parsers | `xcode-select --install` | `apt install build-essential` |
+| cmake | Build tmux-mem-cpu-load | `brew install cmake` | `apt install cmake` |
+| ping | tmux-online-status plugin | pre-installed | `apt install iputils-ping` |
+| C compiler | Treesitter parsers, tmux-mem-cpu-load | `xcode-select --install` | `apt install build-essential` |
+| yazi | File manager | `brew install yazi` | [GitHub releases](https://github.com/sxyazi/yazi/releases) |
 | [Nerd Font](https://www.nerdfonts.com/) v3+ | Icons (tmux/nvim) | `brew install --cask font-hack-nerd-font` | official release |
 
 ### Recommended
@@ -88,7 +93,7 @@ dotfiles/
 |------|---------|---------|
 | lazygit | Git TUI (`<leader>gg`) | `brew install lazygit` |
 | bat | fzf preview highlighting | `brew install bat` |
-| yazi | File manager (`prefix + Tab`) | `brew install yazi` |
+| yazi-quicklook (macOS) | Quick Look from yazi (`gl`) | custom script in `~/.local/bin/` |
 
 ### Language Runtimes
 
