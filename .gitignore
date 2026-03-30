@@ -1,7 +1,10 @@
-# tmux plugins (TPM이 런타임에 설치)
+# tmux plugins (installed at runtime by TPM)
 tmux/.config/tmux/plugins/
 
 # nvim runtime data
 nvim/.config/nvim/.omc/
 nvim/.config/nvim/data/
 nvim/.config/nvim/lazy-lock.json
+
+# yazi plugins (installed at runtime by ya pkg)
+yazi/.config/yazi/plugins/
