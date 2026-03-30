@@ -36,6 +36,42 @@ for pkg in $PACKAGES; do
   stow -R -v --target="$HOME" "$pkg"
 done
 
+# Patch ~/.zshrc with managed block (idempotent)
+ZSHRC="$HOME/.zshrc"
+MANAGED_BEGIN="# >>> dotfiles-managed >>>"
+MANAGED_END="# <<< dotfiles-managed <<<"
+MANAGED_BLOCK="$MANAGED_BEGIN
+ZSH_THEME=\"powerlevel10k/powerlevel10k\"
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+$MANAGED_END"
+
+if [ -f "$ZSHRC" ]; then
+  if grep -qF "$MANAGED_BEGIN" "$ZSHRC"; then
+    # Replace existing managed block
+    awk -v begin="$MANAGED_BEGIN" -v end="$MANAGED_END" -v block="$MANAGED_BLOCK" '
+      $0 == begin { skip=1; printed=0 }
+      skip && $0 == end { skip=0; if(!printed){print block; printed=1}; next }
+      !skip { print }
+    ' "$ZSHRC" > "$ZSHRC.tmp"
+    mv "$ZSHRC.tmp" "$ZSHRC"
+    echo "Updated dotfiles-managed block in $ZSHRC"
+  else
+    printf '\n%s\n' "$MANAGED_BLOCK" >> "$ZSHRC"
+    echo "Added dotfiles-managed block to $ZSHRC"
+  fi
+else
+  echo "Warning: $ZSHRC not found. Install Oh My Zsh first, then re-run."
+fi
+
+# Install tmux plugins via TPM
+TPM_INSTALL="$HOME/.config/tmux/plugins/tpm/bin/install_plugins"
+if [ -x "$TPM_INSTALL" ]; then
+  echo "Installing tmux plugins..."
+  "$TPM_INSTALL"
+else
+  echo "Warning: TPM not found. tmux plugins will be installed on first tmux launch."
+fi
+
 # Install yazi plugins
 if command -v ya >/dev/null 2>&1; then
   echo "Installing yazi plugins..."
