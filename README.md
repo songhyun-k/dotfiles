@@ -41,8 +41,8 @@ cd ~/dotfiles
 
 | Step | Command |
 |------|---------|
-| Apply zsh theme | Set `ZSH_THEME="powerlevel10k/powerlevel10k"` in `~/.zshrc`, add `[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh`, then `exec zsh` |
-| tmux plugins | Launch tmux, then `prefix + I` |
+| Apply zsh theme | Auto-patched by `install.sh` (`~/.zshrc` managed block). Run `exec zsh` to apply. |
+| tmux plugins | Auto-installed by `install.sh` via TPM. Manual: launch tmux, then `prefix + I` |
 | tmux-mem-cpu-load | `cd ~/.config/tmux/plugins/tmux-mem-cpu-load && cmake . && make` |
 | yazi plugins | Auto-installed by `install.sh` (`ya pkg install`). Manual: `ya pkg install` |
 | nvim plugins | Auto-installed on first `nvim` launch |
@@ -58,7 +58,7 @@ dotfiles/
 ├── nvim/.config/nvim/        # LazyVim config
 ├── ccstatusline/             # ccstatusline settings + Claude Code merge overlay
 ├── hammerspoon/.hammerspoon/ # IME auto-switch on Ctrl+b
-├── install.sh                # stow + ya pkg install + Claude Code settings merge
+├── install.sh                # stow + zshrc patch + TPM install + ya pkg install + Claude Code settings merge
 └── README.md
 ```
 
