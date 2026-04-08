@@ -18,7 +18,7 @@ fi
 # --- Memory usage ---
 MEMCPU="$HOME/.config/tmux/plugins/tmux-mem-cpu-load/tmux-mem-cpu-load"
 if [ -x "$MEMCPU" ]; then
-  mem=$("$MEMCPU" -i 2 -m 2 2>/dev/null | awk '{gsub(/[^0-9]/,"",$1); print $1+0}')
+  mem=$("$MEMCPU" -i 2 -m 2 2>/dev/null | awk '{gsub(/[^0-9.]/,"",$1); printf "%d", $1}')
   if [ -n "$mem" ]; then
     segments+=("#[fg=#{@thm_blue},bold]  ${mem}% ")
   fi
