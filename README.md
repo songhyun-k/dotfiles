@@ -23,7 +23,7 @@
 | Package | Description |
 |---------|-------------|
 | **tmux** | Catppuccin Frappe theme, Nerd Font icons, OSC52 clipboard (SSH support), TPM plugins, dynamic status-right (conditional online/mem/cpu/battery/IME segments) |
-| **nvim** | LazyVim with catppuccin, custom lualine, 26 extras (TS, Python, Ruby, Docker, etc.) |
+| **nvim** | LazyVim with catppuccin, custom lualine, 27 extras (TS, Python, Ruby, Docker, snacks_image, etc.) |
 | **ccstatusline** | Claude Code statusline (powerline theme, usage/token widgets) |
 | **zsh** | Powerlevel10k config (catppuccin frappe colors, rainbow style) |
 | **yazi** | Catppuccin Frappe theme, flat status bar, 10 plugins (git, full-border, toggle-pane, smart-filter, chmod, jump-to-char, relative-motions, bookmarks, lazygit, compress) |
@@ -85,6 +85,7 @@ dotfiles/
 | ping | tmux-online-status plugin | pre-installed | `apt install iputils-ping` |
 | C compiler | Treesitter parsers, tmux-mem-cpu-load | `xcode-select --install` | `apt install build-essential` |
 | yazi | File manager | `brew install yazi` | [GitHub releases](https://github.com/sxyazi/yazi/releases) |
+| ImageMagick | Neovim image rendering (snacks_image) | `brew install imagemagick` | `apt install imagemagick` |
 | [Nerd Font](https://www.nerdfonts.com/) v3+ | Icons (tmux/nvim) | `brew install --cask font-hack-nerd-font` | official release |
 
 ### Recommended
