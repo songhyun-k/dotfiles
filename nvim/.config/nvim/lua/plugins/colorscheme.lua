@@ -3,7 +3,9 @@ return {
     "catppuccin/nvim",
     name = "catppuccin",
     lazy = false,
-    priority = 1000,
+    -- Load before LazyVim (priority 10000) so `:colorscheme catppuccin`
+    -- resolves to the plugin on Neovim 0.12+, not the builtin runtime copy.
+    priority = 11000,
     opts = {
       flavour = "frappe",
       transparent_background = true,
