@@ -23,8 +23,7 @@
     "lazyvim.plugins.extras.test.core",
     "lazyvim.plugins.extras.ui.dashboard-nvim",
     "lazyvim.plugins.extras.ui.edgy",
-    "lazyvim.plugins.extras.ui.mini-animate",
-    "lazyvim.plugins.extras.ui.snacks_image"
+    "lazyvim.plugins.extras.ui.mini-animate"
   ],
   "install_version": 8,
   "news": {
