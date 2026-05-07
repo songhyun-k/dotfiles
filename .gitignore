@@ -8,4 +8,7 @@ nvim/.config/nvim/lazy-lock.json
 
 # yazi plugins (installed at runtime by ya pkg)
 yazi/.config/yazi/plugins/
+
+# macOS metadata
+.DS_Store
 /CLAUDE.md
