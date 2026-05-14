@@ -12,6 +12,20 @@ command -v bun >/dev/null 2>&1 || echo "Warning: bun is not installed. ccstatusl
 
 OS="$(uname)"
 
+patch_yazi_relative_motions() {
+  local plugin="$HOME/.config/yazi/plugins/relative-motions.yazi/main.lua"
+  local was_writable=0
+
+  [ -f "$plugin" ] || return 0
+  grep -q 'ya\.mgr_emit' "$plugin" || return 0
+
+  echo "Patching yazi relative-motions deprecated API..."
+  [ -w "$plugin" ] && was_writable=1
+  chmod u+w "$plugin"
+  perl -0pi -e 's/ya\.mgr_emit\(/ya.emit(/g' "$plugin"
+  [ "$was_writable" -eq 1 ] || chmod u-w "$plugin"
+}
+
 # Install Oh My Zsh
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   echo "Installing Oh My Zsh..."
@@ -75,7 +89,11 @@ fi
 # Install yazi plugins
 if command -v ya >/dev/null 2>&1; then
   echo "Installing yazi plugins..."
-  ya pkg install
+  if ! ya pkg install; then
+    echo "Retrying yazi plugin install with --discard..."
+    ya pkg install --discard
+  fi
+  patch_yazi_relative_motions
 else
   echo "Warning: ya is not installed. Yazi plugins will not be installed."
 fi

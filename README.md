@@ -124,6 +124,25 @@ If real config files (not symlinks) already exist, `stow` will conflict. Either 
 
 Remote servers may lack `xterm-ghostty` terminfo. A fallback (`xterm-256color:clipboard`) is included in tmux.conf.
 
+### Yazi relative-motions temporary patch
+
+Yazi `26.5.6` warns that `ya.mgr_emit()` is deprecated. The latest
+`dedukun/relative-motions.yazi` release currently pinned here (`a603d9e`) still
+uses that API, so updating the plugin alone does not remove the warning yet.
+
+`install.sh` applies a temporary post-install patch that replaces
+`ya.mgr_emit(...)` with `ya.emit(...)` in
+`~/.config/yazi/plugins/relative-motions.yazi/main.lua`. If `ya pkg install`
+fails because the patched plugin is detected as locally modified, the script
+retries with `ya pkg install --discard` and reapplies the patch.
+
+Remove this workaround after upstream fixes the plugin and this command returns
+no matches:
+
+```bash
+rg "ya\\.mgr_emit" ~/.config/yazi/plugins/relative-motions.yazi
+```
+
 ## Acknowledgments
 
 - Neovim config based on [LazyVim starter](https://github.com/LazyVim/starter) (Apache 2.0)
